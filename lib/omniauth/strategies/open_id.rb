@@ -69,7 +69,7 @@ module OmniAuth
 
       def get_identifier
         if options[:on_login].respond_to?(:call)
-          instance_eval &options[:on_login]
+          options[:on_login].call(env)
         else
           openid_form
         end
