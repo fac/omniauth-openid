@@ -96,7 +96,7 @@ describe OmniAuth::Strategies::OpenID, :type => :strategy do
         use Rack::Session::Cookie
 
         use OmniAuth::Builder do
-          provider :openid, :login_entrypoint => ->(env){ [302, {}, ['Awesome']] }
+          provider :openid, :on_login => ->(env){ [302, {}, ['Awesome']] }
         end
 
         run lambda {|env| [404, {'Content-Type' => 'text/plain'}, [nil || env.key?('omniauth.auth').to_s]] }

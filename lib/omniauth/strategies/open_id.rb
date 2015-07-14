@@ -27,7 +27,7 @@ module OmniAuth
       option :store, ::OpenID::Store::Memory.new
       option :identifier, nil
       option :identifier_param, 'openid_url'
-      option :login_entrypoint
+      option :on_login, nil
 
       def dummy_app
         lambda{|env| [401, {"WWW-Authenticate" => Rack::OpenID.build_header(
@@ -68,8 +68,8 @@ module OmniAuth
       end
 
       def get_identifier
-        if options[:login_entrypoint].respond_to?(:call)
-          instance_eval &options[:login_entrypoint]
+        if options[:on_login].respond_to?(:call)
+          instance_eval &options[:on_login]
         else
           openid_form
         end
